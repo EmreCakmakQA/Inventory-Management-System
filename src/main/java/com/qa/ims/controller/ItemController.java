@@ -9,18 +9,14 @@ import com.qa.ims.persistence.dao.ItemDAO;
 import com.qa.ims.persistence.domain.Customer;
 import com.qa.ims.utils.Utils;
 
-/**
- * Takes in customer details for CRUD functionality
- *
- */
-public class CustomerController implements CrudController<Customer> {
+public class ItemController implements CrudController<Item> {
 
 	public static final Logger LOGGER = LogManager.getLogger();
 
 	private ItemDAO itemDAO;
 	private Utils utils;
 
-	public CustomerController(ItemDAO itemDAO, Utils utils) {
+	public ItemController(ItemDAO itemDAO, Utils utils) {
 		super();
 		this.itemDAO = itemDAO;
 		this.utils = utils;
@@ -30,19 +26,19 @@ public class CustomerController implements CrudController<Customer> {
 	 * Reads all customers to the logger
 	 */
 	@Override
-	public List<Customer> readAll() {
-		List<Customer> customers = itemDAO.readAll();
-		for (Customer customer : customers) {
-			LOGGER.info(customer.toString());
+	public List<Item> readAll() {
+		List<Item> item = itemDAO.readAll();
+		for (Item item : item) {
+			LOGGER.info(item.toString());
 		}
-		return customers;
+		return item;
 	}
 
 	/**
 	 * Creates a customer by taking in user input
 	 */
 	@Override
-	public Customer create() {
+	public Item create() {
 		LOGGER.info("Please enter a first name");
 		String firstName = utils.getString();
 		LOGGER.info("Please enter a surname");
@@ -56,14 +52,14 @@ public class CustomerController implements CrudController<Customer> {
 	 * Updates an existing customer by taking in user input
 	 */
 	@Override
-	public Customer update() {
-		LOGGER.info("Please enter the id of the customer you would like to update");
+	public Item update() {
+		LOGGER.info("Please enter the id of the item you would like to update");
 		Long id = utils.getLong();
-		LOGGER.info("Please enter a first name");
-		String firstName = utils.getString();
+		LOGGER.info("Please enter an item name");
+		String name = utils.getString();
 		LOGGER.info("Please enter a surname");
-		String surname = utils.getString();
-		Customer customer = itemDAO.update(new Customer(id, firstName, surname));
+		String price = utils.getString();
+		Item item = itemDAO.update(new Item(id, name, price));
 		LOGGER.info("Customer Updated");
 		return customer;
 	}
@@ -77,7 +73,7 @@ public class CustomerController implements CrudController<Customer> {
 	public int delete() {
 		LOGGER.info("Please enter the id of the customer you would like to delete");
 		Long id = utils.getLong();
-		return itemDAO.delete(id);
+		return customerDAO.delete(id);
 	}
 
 }

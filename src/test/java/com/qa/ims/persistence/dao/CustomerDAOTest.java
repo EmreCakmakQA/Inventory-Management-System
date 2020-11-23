@@ -14,7 +14,7 @@ import com.qa.ims.utils.DBUtils;
 
 public class CustomerDAOTest {
 
-	private final CustomerDAO DAO = new CustomerDAO();
+	private final ItemDAO DAO = new ItemDAO();
 
 	@BeforeClass
 	public static void init() {
