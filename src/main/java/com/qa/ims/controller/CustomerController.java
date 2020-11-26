@@ -5,7 +5,7 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.qa.ims.persistence.dao.ItemDAO;
+import com.qa.ims.persistence.dao.CustomerDAO;
 import com.qa.ims.persistence.domain.Customer;
 import com.qa.ims.utils.Utils;
 
@@ -17,12 +17,12 @@ public class CustomerController implements CrudController<Customer> {
 
 	public static final Logger LOGGER = LogManager.getLogger();
 
-	private ItemDAO itemDAO;
+	private CustomerDAO customerDAO;
 	private Utils utils;
 
-	public CustomerController(ItemDAO itemDAO, Utils utils) {
+	public CustomerController(CustomerDAO customerDAO, Utils utils) {
 		super();
-		this.itemDAO = itemDAO;
+		this.customerDAO = customerDAO;
 		this.utils = utils;
 	}
 
@@ -31,7 +31,7 @@ public class CustomerController implements CrudController<Customer> {
 	 */
 	@Override
 	public List<Customer> readAll() {
-		List<Customer> customers = itemDAO.readAll();
+		List<Customer> customers = customerDAO.readAll();
 		for (Customer customer : customers) {
 			LOGGER.info(customer.toString());
 		}
@@ -47,7 +47,7 @@ public class CustomerController implements CrudController<Customer> {
 		String firstName = utils.getString();
 		LOGGER.info("Please enter a surname");
 		String surname = utils.getString();
-		Customer customer = itemDAO.create(new Customer(firstName, surname));
+		Customer customer = customerDAO.create(new Customer(firstName, surname));
 		LOGGER.info("Customer created");
 		return customer;
 	}
@@ -63,7 +63,7 @@ public class CustomerController implements CrudController<Customer> {
 		String firstName = utils.getString();
 		LOGGER.info("Please enter a surname");
 		String surname = utils.getString();
-		Customer customer = itemDAO.update(new Customer(id, firstName, surname));
+		Customer customer = customerDAO.update(new Customer(id, firstName, surname));
 		LOGGER.info("Customer Updated");
 		return customer;
 	}
@@ -77,7 +77,7 @@ public class CustomerController implements CrudController<Customer> {
 	public int delete() {
 		LOGGER.info("Please enter the id of the customer you would like to delete");
 		Long id = utils.getLong();
-		return itemDAO.delete(id);
+		return customerDAO.delete(id);
 	}
 
 }

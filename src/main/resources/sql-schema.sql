@@ -7,3 +7,27 @@ CREATE TABLE IF NOT EXISTS `ims`.`customers` (
     `surname` VARCHAR(40) NULL DEFAULT NULL,
     PRIMARY KEY (`id`)
 );
+
+CREATE TABLE IF NOT EXISTS `ims`.`item` (
+    `id` INT(11) NOT NULL AUTO_INCREMENT,
+    `itemName` VARCHAR(40) NULL DEFAULT NULL,
+    `itemPrice` DOUBLE NULL DEFAULT NULL,
+    `itemQuantity` INT(11) NULL DEFAULT NULL,	
+    PRIMARY KEY (`id`)
+);
+
+CREATE TABLE IF NOT EXISTS `ims`.`orders` (
+    `order_id` INT(11) NOT NULL AUTO_INCREMENT,
+    `customer_id` INT(11) NULL DEFAULT NULL,
+    PRIMARY KEY (`order_id`),
+    FOREIGN KEY (`customer_id`) REFERENCES customers(`id`) 
+);
+
+CREATE TABLE IF NOT EXISTS `ims`.`orders_items` (
+    `id` INT(11) NOT NULL AUTO_INCREMENT,
+    `fk_order_id` INT(11) NOT NULL,
+    `fk_item_id` INT(11) NOT NULL,
+    PRIMARY KEY (`id`),
+    CONSTRAINT `fk_order_id` FOREIGN KEY (`fk_order_id) REFERENCES order(`id`),
+    CONSTRAINT `fk_item_id` FOREIGN KEY (`fk_item_id`) REFERENCES item(`id`) 
+);

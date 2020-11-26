@@ -20,9 +20,10 @@ public class Utils {
 	}
 
 	public Long getLong() {
-		String input = getString();
+		
 		Long longInput = null;
 		do {
+			String input = getString();
 			try {
 				longInput = Long.parseLong(input);
 			} catch (NumberFormatException nfe) {
@@ -37,9 +38,10 @@ public class Utils {
 	}
 
 	public Double getDouble() {
-		String input = getString();
+		 //you took String input = getString(): from here in case you need to put it back
 		Double doubleInput = null;
 		do {
+			String input = getString();
 			try {
 				doubleInput = Double.parseDouble(input);
 			} catch (NumberFormatException nfe) {
