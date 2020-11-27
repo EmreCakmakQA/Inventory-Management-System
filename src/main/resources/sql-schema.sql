@@ -28,6 +28,6 @@ CREATE TABLE IF NOT EXISTS `ims`.`orders_items` (
     `fk_order_id` INT(11) NOT NULL,
     `fk_item_id` INT(11) NOT NULL,
     PRIMARY KEY (`id`),
-    CONSTRAINT `fk_order_id` FOREIGN KEY (`fk_order_id) REFERENCES order(`id`),
+    CONSTRAINT `fk_order_id` FOREIGN KEY (`fk_order_id`) REFERENCES orders(`order_id`),
     CONSTRAINT `fk_item_id` FOREIGN KEY (`fk_item_id`) REFERENCES item(`id`) 
 );

@@ -20,7 +20,7 @@ public class ItemDAO implements Dao<Item>{
 	public Item modelFromResultSet(ResultSet resultSet) throws SQLException {
 		Long id = resultSet.getLong("id");
 		String itemName = resultSet.getString("itemName");
-		Double price = resultSet.getDouble("itemPrice");
+		Long price = resultSet.getLong("itemPrice");
 		Long quantity = resultSet.getLong("itemQuantity");
 		return new Item(id, itemName, price, quantity);
 	}
@@ -34,7 +34,7 @@ public class ItemDAO implements Dao<Item>{
 	public List<Item> readAll() {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();
-				ResultSet resultSet = statement.executeQuery("select * from item");) {
+				ResultSet resultSet = statement.executeQuery("SELECT * FROM item");) {
 			List<Item> items = new ArrayList<>();
 			while (resultSet.next()) {
 				items.add(modelFromResultSet(resultSet));
@@ -79,6 +79,11 @@ public class ItemDAO implements Dao<Item>{
 		return null;
 	}
 	
+	public void itemIterator(Long id) {
+		Item item = readItem(id);
+		item.setItemQuantity(item.getItemQuantity() - 1);
+		update(item);
+	}
 	
 	
 	

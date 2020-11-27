@@ -38,7 +38,7 @@ public class Utils {
 	}
 
 	public Double getDouble() {
-		 //you took String input = getString(): from here in case you need to put it back
+		 
 		Double doubleInput = null;
 		do {
 			String input = getString();
