@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS `ims`.`orders` (
     `order_id` INT(11) NOT NULL AUTO_INCREMENT,
     `customer_id` INT(11) NULL DEFAULT NULL,
     PRIMARY KEY (`order_id`),
-    FOREIGN KEY (`customer_id`) REFERENCES customers(`id`) 
+    CONSTRAINT `customer_id` FOREIGN KEY (`customer_id`) REFERENCES customers(`id`) 
 );
 
 CREATE TABLE IF NOT EXISTS `ims`.`orders_items` (

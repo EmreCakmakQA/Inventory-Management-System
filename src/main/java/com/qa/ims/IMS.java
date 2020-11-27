@@ -29,7 +29,7 @@ public class IMS {
 		final ItemDAO itemDAO = new ItemDAO();
 		this.items = new ItemController(itemDAO, utils);
 		final OrderDAO orderDAO = new OrderDAO();
-		this.orders = new OrderController(orderDAO, utils);
+		this.orders = new OrderController(orderDAO, itemDAO, custDAO, utils);
 	}
 
 	public void imsSystem() {

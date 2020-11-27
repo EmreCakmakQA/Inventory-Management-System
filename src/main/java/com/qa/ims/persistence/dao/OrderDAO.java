@@ -18,17 +18,19 @@ public class OrderDAO implements Dao<Order> {
 
 	public static final Logger LOGGER = LogManager.getLogger();
 	
+	private ItemDAO itemDAO = new ItemDAO();
 	
-	private ItemDAO itemDAO;
 	@Override
 	public Order modelFromResultSet(ResultSet resultSet) throws SQLException {
 		Long id = resultSet.getLong("order_id");
 		Long customerId = resultSet.getLong("customer_id");
-		List<Item> items = readLines(resultSet.getLong("id"));
+		List<Item> items = readLines(resultSet.getLong("order_id"));
+		Long totalPrice = 0l;
 		for(Item item:items) {
 			item.setItemQuantity(1L);
+			totalPrice += item.getItemPrice();
 		}
-		return new Order(id, customerId, items);
+		return new Order(id, customerId, items, totalPrice);
 	}
 
 	// CRUD
@@ -104,6 +106,28 @@ public class OrderDAO implements Dao<Order> {
 	}
 
 	
+	
+	
+	public List<Order> getCustomerOrder(long id) {
+		try(Connection connection = DBUtils.getInstance().getConnection();
+				Statement statement = connection.createStatement();
+				ResultSet resultSet = statement.executeQuery("SELECT * FROM orders where fk_customer_id = " + id);) {
+				List<Order> orders = new ArrayList<Order>();
+				while (resultSet.next()) {
+					OrderDAO order = new OrderDAO();
+					orders.add(order.readOrder(resultSet.getLong("id")));
+				}
+				return orders;
+			} catch (Exception e) {
+				LOGGER.debug(e);
+				LOGGER.error(e.getMessage());
+			}
+		return null;
+	}
+	
+	
+	
+	
 	public List<Item> readLines(Long id){
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();
@@ -125,8 +149,8 @@ public class OrderDAO implements Dao<Order> {
 	public Order update(Order order) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();) {
-			statement.executeUpdate("update orders set customer_id =" + order.getCustomerId() + " where order_id =" + order.getId());
-			statement.executeUpdate("UPDATE orders_items set fk_item_id =" + order.getItems() + " where fk_order_id =" + order.getId());
+			statement.executeUpdate("update orders set customer_id ='" + order.getCustomerId() + "' where order_id =" + order.getId());
+			statement.executeUpdate("UPDATE orders_items set fk_item_id ='" + order.getItems() + "' where fk_order_id =" + order.getId());
 			return readOrder(order.getId());
 		} catch (Exception e) {
 			LOGGER.debug(e);
@@ -146,7 +170,7 @@ public class OrderDAO implements Dao<Order> {
 	public int delete(long id) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();) {
-			return statement.executeUpdate("delete from orders where id = " + id);
+			return statement.executeUpdate("delete from orders where order_id = " + id);
 		} catch (Exception e) {
 			LOGGER.debug(e);
 			LOGGER.error(e.getMessage());
@@ -166,21 +190,27 @@ public class OrderDAO implements Dao<Order> {
 		return 0;
 	}
 	
+	
+	
+	
 	public int deleteOrderLines(long orderID) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();) {
-		return statement.executeUpdate("delete from order_item where fk_order_id = " + orderID);
+		return statement.executeUpdate("delete from orders_items where fk_order_id = " + orderID);
 		} catch (Exception e) {
 		LOGGER.debug(e);
 		LOGGER.error(e.getMessage());
 	}
 	return 0;
 	}
+	
+	
 
-	public void createLine(long id, long itemID) {
-		// TODO Auto-generated method stub
-		
-	}
+
+//	public void createLine(long id, long itemID) {
+//		// TODO Auto-generated method stub
+//		
+//	}
 
 
 }

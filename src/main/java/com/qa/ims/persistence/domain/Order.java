@@ -11,7 +11,8 @@ public class Order {
 
 	private long id = 0;
 	private long customer_id = 0;
-	private List<Item> items = new ArrayList<Item>();
+	private long totalPrice;
+	private List<Item> items = new ArrayList<>();
 	
 
 	// constructors
@@ -38,6 +39,14 @@ public class Order {
 		this.customer_id = customer_id;
 		this.items = items;
 	}
+	
+	public Order(long id, long customer_id, List<Item> items, Long totalPrice) {
+		super();
+		this.id = id;
+		this.customer_id = customer_id;
+		this.items = items;
+		this.totalPrice = totalPrice;
+	}
 
 	// generate getters & setters
 	public long getId() {
@@ -63,6 +72,15 @@ public class Order {
 	public void setItems(List<Item> items) {
 		this.items = items;
 	}
+	
+	
+	public long getTotalPrice() {
+		return totalPrice;
+	}
+
+	public void setTotalPrice(long totalPrice) {
+		this.totalPrice = totalPrice;
+	}
 
 	//
 	public static Order convert(ResultSet rs) throws SQLException {
@@ -80,7 +98,9 @@ public class Order {
 
 	@Override
 	public String toString() {
-		return "Order id: " + id + ", customer id: " + customer_id;
+		return "Order id: " + id + ", customer id: " + customer_id + ", items: " + items + ", total price:" + totalPrice;
 	}
+
+	
 
 }

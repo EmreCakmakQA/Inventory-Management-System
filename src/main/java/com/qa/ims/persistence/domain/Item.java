@@ -47,7 +47,7 @@ public class Item {
 	}
 
 
-	public double getItemPrice() {
+	public Long getItemPrice() {
 		return itemPrice;
 	}
 

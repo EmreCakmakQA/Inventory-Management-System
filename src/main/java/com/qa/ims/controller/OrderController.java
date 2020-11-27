@@ -22,10 +22,13 @@ public class OrderController implements CrudController<Order> {
 	private ItemDAO itemDAO;
 	private Utils utils;
 
-	public OrderController(OrderDAO orderDAO, Utils utils) {
+	public OrderController(OrderDAO orderDAO, ItemDAO itemDAO, CustomerDAO customerDAO, Utils utils) {
 		super();
 		this.orderDAO = orderDAO;
+		this.itemDAO = itemDAO;
+		this.customerDAO = customerDAO;
 		this.utils = utils;
+		
 	}
 
 	@Override
@@ -39,10 +42,10 @@ public class OrderController implements CrudController<Order> {
 
 	@Override
 	public Order create() {	
-//		List<Customer> customers = customerDAO.readAll();
-//		for (Customer customer : customers) {
-//			LOGGER.info(customer.toString());
-//		}
+		List<Customer> customers = customerDAO.readAll();
+		for (Customer customer : customers) {
+			LOGGER.info(customer.toString());
+		}
 		LOGGER.info("Enter a customer ID: ");
 		long customerID = utils.getLong();
 		Order order = orderDAO.create(new Order(customerID));
@@ -54,12 +57,11 @@ public class OrderController implements CrudController<Order> {
 			}
 			LOGGER.info("Please enter the ID of the product");
 			long itemID = utils.getLong();
-			orderDAO.createLine(order.getId(), itemID);
-			LOGGER.info("Would you like to add another item?");
+			orderDAO.createItem(order.getId(), itemID);
+			LOGGER.info("Would you like to add another item yes/no?");
 			response = utils.getString();
 		} while (response.toLowerCase().equals("yes"));
 		order = orderDAO.readLatest();
-		LOGGER.info("Order created");
 		return order;
 		
 	}
@@ -97,6 +99,7 @@ public class OrderController implements CrudController<Order> {
 	public int delete() {
 		LOGGER.info("Please enter the id of the item you would like to delete");
 		long id = utils.getLong();
+		orderDAO.deleteOrderLines(id);
 		return orderDAO.delete(id);
 	}
 
