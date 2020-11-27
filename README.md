@@ -1,7 +1,7 @@
 Coverage: 34%
-# Project Title
+# Inventory Management System
 
-One Paragraph of project description goes here
+An IMS with CRUD functionality that uses GCP to host a mySQL database. This project aimed at creating a system that can manipulate data on the cloud. The development process included Java code to run the processes with JUnit and Mockito as unit tests. This produced a working IMS that can track and manipulate customer information, order details and item data.
 
 ## Getting Started
 
