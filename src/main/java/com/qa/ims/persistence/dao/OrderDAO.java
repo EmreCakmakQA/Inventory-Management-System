@@ -33,8 +33,7 @@ public class OrderDAO implements Dao<Order> {
 		return new Order(id, customerId, items, totalPrice);
 	}
 
-	// CRUD
-	// create
+	// Create Order
 	public Order create(Order order) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();) {
@@ -47,6 +46,7 @@ public class OrderDAO implements Dao<Order> {
 		return null;
 	}
 
+	
 	public Order createItem(Long orderID, Long itemID) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();) {
@@ -61,6 +61,8 @@ public class OrderDAO implements Dao<Order> {
 		return null;
 	}
 
+	
+	// Read Orders
 	@Override
 	public List<Order> readAll() {
 		try (Connection connection = DBUtils.getInstance().getConnection();
@@ -145,6 +147,7 @@ public class OrderDAO implements Dao<Order> {
 	}
 	
 	
+	// Update Orders
 	@Override
 	public Order update(Order order) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
@@ -161,11 +164,7 @@ public class OrderDAO implements Dao<Order> {
 	
 	
 
-	/**
-	 * Deletes an order in the database
-	 * 
-	 * @param id - id of the customer
-	 */
+	// Delete Order
 	@Override
 	public int delete(long id) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
@@ -203,14 +202,6 @@ public class OrderDAO implements Dao<Order> {
 	}
 	return 0;
 	}
-	
-	
-
-
-//	public void createLine(long id, long itemID) {
-//		// TODO Auto-generated method stub
-//		
-//	}
 
 
 }
