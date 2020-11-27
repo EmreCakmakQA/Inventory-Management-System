@@ -5,6 +5,8 @@ import static org.junit.Assert.assertEquals;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -13,13 +15,29 @@ import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import com.qa.ims.controller.CustomerController;
+import com.qa.ims.persistence.dao.CustomerDAO;
 import com.qa.ims.persistence.dao.ItemDAO;
 import com.qa.ims.persistence.domain.Customer;
+import com.qa.ims.utils.DBUtils;
 import com.qa.ims.utils.Utils;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CustomerControllerTest {
 
+	private CustomerDAO customerDAO;
+	
+	
+	@BeforeClass
+	public static void init() {
+		DBUtils.connect("root", "root");
+	}
+	
+	@Before
+	public void setup() {
+		DBUtils.getInstance().init("src/main/resources/sql-schema.sql", "src/test/resources/sql-data.sql");
+	}
+	
+	
 	@Mock
 	private Utils utils;
 
@@ -48,9 +66,7 @@ public class CustomerControllerTest {
 		List<Customer> customers = new ArrayList<>();
 		customers.add(new Customer(1L, "jordan", "harrison"));
 
-		Mockito.when(dao.readAll()).thenReturn(customers);
-
-		assertEquals(customers, controller.readAll());
+		assertEquals(customers, customerDAO.readAll());
 
 		Mockito.verify(dao, Mockito.times(1)).readAll();
 	}

@@ -39,10 +39,10 @@ public class OrderController implements CrudController<Order> {
 
 	@Override
 	public Order create() {	
-		List<Customer> customers = customerDAO.readAll();
-		for (Customer customer : customers) {
-			LOGGER.info(customer.toString());
-		}
+//		List<Customer> customers = customerDAO.readAll();
+//		for (Customer customer : customers) {
+//			LOGGER.info(customer.toString());
+//		}
 		LOGGER.info("Enter a customer ID: ");
 		long customerID = utils.getLong();
 		Order order = orderDAO.create(new Order(customerID));
