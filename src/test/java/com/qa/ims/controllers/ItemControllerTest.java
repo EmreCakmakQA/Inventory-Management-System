@@ -1,7 +1,11 @@
 package com.qa.ims.controllers;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.any;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +29,7 @@ import com.qa.ims.utils.DBUtils;
 import com.qa.ims.utils.Utils;
 
 
-
+@RunWith(MockitoJUnitRunner.class)
 public class ItemControllerTest {
 
 	@Mock
@@ -46,9 +50,32 @@ public class ItemControllerTest {
 		
 		assertEquals(items, itemController.readAll());
 		
+		verify(itemDAO, times(1)).readAll();
 	}
+	
+	@Test
+	public void testCreate() {
+		
+		String name = "Jacket";
+		Long price = 30l;
+		Long quantity = 10l;
+		Item created = new Item(name, price, quantity);
+		Item expected = new Item(3l, name, price, quantity);
+		
+		when(utils.getString()).thenReturn(name);
+		when(utils.getLong()).thenReturn(price);
+		when(utils.getLong()).thenReturn(quantity);
+		when(itemDAO.create(created)).thenReturn(expected);
+		
+		assertEquals(expected, itemController.create());
+		
+		
+		
+		
+
+	}
+}
 
 	
 	
-}
 
