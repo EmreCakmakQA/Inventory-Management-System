@@ -190,8 +190,6 @@ public class OrderDAO implements Dao<Order> {
 	}
 	
 	
-	
-	
 	public int deleteOrderLines(long orderID) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();) {
@@ -201,6 +199,28 @@ public class OrderDAO implements Dao<Order> {
 		LOGGER.error(e.getMessage());
 	}
 	return 0;
+	}
+	
+	public int deleteCustomer(long id) {
+		try (Connection connection = DBUtils.getInstance().getConnection();
+				Statement statement = connection.createStatement();) {
+			return statement.executeUpdate("delete from orders where fk_customer_id = " + id);
+		} catch (Exception e) {
+			LOGGER.debug(e);
+			LOGGER.error(e.getMessage());
+		}
+		return 0;
+	}
+	
+	public int deleteItemFromAll(long item_id) {
+		try (Connection connection = DBUtils.getInstance().getConnection();
+				Statement statement = connection.createStatement();) {
+			return statement.executeUpdate("delete from orderslists where fk_item_id =" + item_id);
+		} catch (Exception e) {
+			LOGGER.debug(e);
+			LOGGER.error(e.getMessage());
+		}
+		return 0;
 	}
 
 

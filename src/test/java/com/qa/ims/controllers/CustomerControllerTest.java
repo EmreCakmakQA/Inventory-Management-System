@@ -5,8 +5,6 @@ import static org.junit.Assert.assertEquals;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -16,33 +14,22 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import com.qa.ims.controller.CustomerController;
 import com.qa.ims.persistence.dao.CustomerDAO;
-import com.qa.ims.persistence.dao.ItemDAO;
+import com.qa.ims.persistence.dao.OrderDAO;
 import com.qa.ims.persistence.domain.Customer;
-import com.qa.ims.utils.DBUtils;
+import com.qa.ims.persistence.domain.Order;
 import com.qa.ims.utils.Utils;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CustomerControllerTest {
 
-	private CustomerDAO customerDAO;
-	
-	
-	@BeforeClass
-	public static void init() {
-		DBUtils.connect("root", "root");
-	}
-	
-	@Before
-	public void setup() {
-		DBUtils.getInstance().init("src/main/resources/sql-schema.sql", "src/test/resources/sql-data.sql");
-	}
-	
-	
 	@Mock
 	private Utils utils;
 
 	@Mock
-	private ItemDAO dao;
+	private CustomerDAO dao;
+	
+	@Mock
+	private OrderDAO orderDAO;
 
 	@InjectMocks
 	private CustomerController controller;
@@ -66,7 +53,9 @@ public class CustomerControllerTest {
 		List<Customer> customers = new ArrayList<>();
 		customers.add(new Customer(1L, "jordan", "harrison"));
 
-		assertEquals(customers, customerDAO.readAll());
+		Mockito.when(dao.readAll()).thenReturn(customers);
+
+		assertEquals(customers, controller.readAll());
 
 		Mockito.verify(dao, Mockito.times(1)).readAll();
 	}
@@ -88,12 +77,15 @@ public class CustomerControllerTest {
 
 	@Test
 	public void testDelete() {
-		final long ID = 1L;
+		final long ID = 2L;
+		List<Order> order = new ArrayList<>();
+		order.add(new Order(1l,1l));
 
 		Mockito.when(utils.getLong()).thenReturn(ID);
-		Mockito.when(dao.delete(ID)).thenReturn(1);
+		Mockito.when(orderDAO.getCustomerOrder(2l)).thenReturn(order);
+		Mockito.when(dao.delete(ID)).thenReturn(2);
 
-		assertEquals(1L, this.controller.delete());
+		assertEquals(2L, this.controller.delete());
 
 		Mockito.verify(utils, Mockito.times(1)).getLong();
 		Mockito.verify(dao, Mockito.times(1)).delete(ID);

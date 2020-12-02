@@ -10,13 +10,12 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.qa.ims.persistence.domain.Item;
+import com.qa.ims.persistence.domain.Customer;
 import com.qa.ims.utils.DBUtils;
 
-public class ItemDAOTestFail {
+public class CustomerDAOTestFail {
 
-	
-	private final ItemDAO DAO = new ItemDAO();
+	private final CustomerDAO DAO = new CustomerDAO();
 	
 	@BeforeClass
 	public static void init() {
@@ -31,16 +30,15 @@ public class ItemDAOTestFail {
 	@Test
 	public void testCreate()
 	{
-		Item item = new Item("PS5",1l, 20l);
-		assertNull(DAO.create(item));
+		assertNull(DAO.create(new Customer(3l,"Troy","Alleyne")));
 	}
 	
 	@Test
 	public void testReadAll()
 	{
-		List<Item> item = new ArrayList<>();
+		List<Customer> customer = new ArrayList<>();
 		
-		assertEquals(item,DAO.readAll());
+		assertEquals(customer,DAO.readAll());
 	}
 	
 	@Test
@@ -50,16 +48,16 @@ public class ItemDAOTestFail {
 	}
 	
 	@Test
-	public void testReadItem()
+	public void testReadCustomer()
 	{		
-		assertNull(DAO.readItem(4L));
+		assertNull(DAO.readCustomer(4L));
 	}
 	
 	@Test
 	public void testUpdate()
 	{		
-		Item item = new Item("Bacon", 1L, 2L);
-		assertNull(DAO.update(item));
+		Customer customer = new Customer(1L, "Lawrence", "Sarpong");
+		assertNull(DAO.update(customer));
 	}
 	
 	@Test

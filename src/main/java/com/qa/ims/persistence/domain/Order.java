@@ -83,6 +83,7 @@ public class Order {
 	}
 
 	//
+	@SuppressWarnings("unchecked")
 	public static Order convert(ResultSet rs) throws SQLException {
 		if (rs.next()) {
 			long id = rs.getLong("order_id");

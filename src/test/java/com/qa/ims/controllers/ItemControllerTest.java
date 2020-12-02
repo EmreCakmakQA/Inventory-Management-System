@@ -1,17 +1,10 @@
 package com.qa.ims.controllers;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.any;
-
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -19,63 +12,82 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import com.qa.ims.controller.CustomerController;
 import com.qa.ims.controller.ItemController;
-import com.qa.ims.persistence.dao.CustomerDAO;
 import com.qa.ims.persistence.dao.ItemDAO;
-import com.qa.ims.persistence.domain.Customer;
 import com.qa.ims.persistence.domain.Item;
-import com.qa.ims.utils.DBUtils;
 import com.qa.ims.utils.Utils;
-
 
 @RunWith(MockitoJUnitRunner.class)
 public class ItemControllerTest {
 
 	@Mock
-	private ItemDAO itemDAO;
-	
-	@Mock
 	private Utils utils;
-	
+
+	@Mock
+	private ItemDAO dao;
+
 	@InjectMocks
-	private ItemController itemController;
-	
+	private ItemController controller;
+
+	@Test
+	public void testCreate() {
+		final String itemName = "cheese";
+		final long itemPrice = 10l;
+		final long itemQuantity = 1l;
+		final Item created = new Item(itemName, itemPrice, itemQuantity);
+
+		Mockito.when(utils.getString()).thenReturn(itemName);
+		Mockito.when(utils.getLong()).thenReturn(itemPrice);
+		Mockito.when(utils.getLong()).thenReturn(itemQuantity);
+
+		Mockito.when(dao.create(created)).thenReturn(created);
+
+		assertEquals(created, controller.create());
+
+		Mockito.verify(utils, Mockito.times(1)).getString();
+		Mockito.verify(utils, Mockito.times(1)).getLong();
+		Mockito.verify(dao, Mockito.times(1)).create(created);
+	}
+
 	@Test
 	public void testReadAll() {
 		List<Item> items = new ArrayList<>();
-		items.add(new Item(1l, "spoon", 1l, 10l));
-		items.add(new Item(2l, "cheese", 20l, 2l));
-		when(itemDAO.readAll()).thenReturn(items);
-		
-		assertEquals(items, itemController.readAll());
-		
-		verify(itemDAO, times(1)).readAll();
+		items.add(new Item("cheese", 1L, 10L));
+
+		Mockito.when(dao.readAll()).thenReturn(items);
+
+		assertEquals(items, controller.readAll());
+
+		Mockito.verify(dao, Mockito.times(1)).readAll();
 	}
-	
+
 	@Test
-	public void testCreate() {
-		
-		String name = "Jacket";
-		Long price = 30l;
-		Long quantity = 10l;
-		Item created = new Item(name, price, quantity);
-		Item expected = new Item(3l, name, price, quantity);
-		
-		when(utils.getString()).thenReturn(name);
-		when(utils.getLong()).thenReturn(price);
-		when(utils.getLong()).thenReturn(quantity);
-		when(itemDAO.create(created)).thenReturn(expected);
-		
-		assertEquals(expected, itemController.create());
-		
-		
-		
-		
+	public void testUpdate() {
+		Item updated = new Item("spoon", 2l, 20l);
 
+		Mockito.when(this.utils.getLong()).thenReturn(20l, updated.getItemPrice());
+		Mockito.when(this.utils.getString()).thenReturn(updated.getItemName());
+		Mockito.when(this.dao.update(updated)).thenReturn(updated);
+
+		assertEquals(updated, this.controller.update());
+
+		Mockito.verify(this.utils, Mockito.times(2)).getLong();
+		Mockito.verify(this.utils, Mockito.times(1)).getString();
+		Mockito.verify(this.dao, Mockito.times(1)).update(updated);
 	}
+
+	@Test
+	public void testDelete() {
+		final long ID = 2L;
+
+		Mockito.when(utils.getLong()).thenReturn(ID);
+		Mockito.when(dao.delete(ID)).thenReturn(2);
+
+		assertEquals(2L, this.controller.delete());
+
+		Mockito.verify(utils, Mockito.times(1)).getLong();
+		Mockito.verify(dao, Mockito.times(1)).delete(ID);
+	}
+
+	
 }
-
-	
-	
-
