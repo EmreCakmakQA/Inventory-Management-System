@@ -1,5 +1,5 @@
 # Inventory Management System
-Coverage: 10.9%
+Coverage: 17.7%
 
 An IMS with CRUD functionality that uses GCP to host a mySQL database. This project aimed at creating a system that can manipulate data on the cloud. The development process included Java code to run the processes with JUnit and Mockito as unit tests. This produced a working IMS that can track and manipulate customer information, order details and item data.
 
@@ -64,7 +64,7 @@ RETURN: To return to domain selection
 ```
 
 ## Running the tests
-Both JUnit and Mockito were used in this project for testing and as it stands the unit coverage of the entire project is only at 10.9% due to time constaints. Testing is on-going in the hopes of increasing it.
+Both JUnit and Mockito were used in this project for testing and as it stands the unit coverage of the entire project is only at 17.7% due to time constaints. Testing is on-going in the hopes of increasing it.
 
 ### Unit Tests 
 The test suites are stored in src/test/java -> com.qa.ims. One example is:
