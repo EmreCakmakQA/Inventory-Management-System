@@ -1,4 +1,4 @@
-Coverage: 34%
+Coverage: 8%
 # Project Title
 
 One Paragraph of project description goes here
@@ -12,37 +12,65 @@ These instructions will get you a copy of the project up and running on your loc
 What things you need to install the software and how to install them
 
 ```
-Give examples
+Install: Eclipse IDE for Java and JDK14 as well as MySQL Server (locally running the project). You can also run the MySQL Server on a GCP instance
+
+
 ```
 
 ### Installing
 
-A step by step series of examples that tell you how to get a development env running
-
-Say what the step will be
+The repository can be cloned with the following command in your terminal Make sure you are running the latest version of Java and MySQL 5.7 Server. The DBUtils files need to be changed to reflect this with your MySQL IP address.
 
 ```
-Give the example
+git clone
 ```
 
-And repeat
+### Running the project
+
+The user name and password:
 
 ```
-until finished
+user: root
+password: root
 ```
 
-End with an example of getting some data out of the system or using it for a little demo
+The project will be interactable through the use of the command line in Eclipse. This is what you will see upon signing in:
+
+```
+Which entity would you like to use?
+CUSTOMER: Information about customers
+ITEM: Individual Items
+ORDER: Purchases of items
+STOP: To close the application
+```
+
+To interact simply type the entity you would like to use:
+
+```
+Which entity would you like to use?
+CUSTOMER: Information about customers
+ITEM: Individual Items
+ORDER: Purchases of items
+STOP: To close the application
+
+customer
+What would you like to do with customer:
+CREATE: To save a new entity into the database
+READ: To read an entity from the database
+UPDATE: To change an entity already in the database
+DELETE: To remove an entity from the database
+RETURN: To return to domain selection
+
+```
 
 ## Running the tests
-
-Explain how to run the automated tests for this system. Break down into which tests and what they do
+Both JUnit and Mockito were used in this project for testing and as it stands the unit coverage of the entire project is only at 8% due to time constaints.
 
 ### Unit Tests 
-
-Explain what these tests test, why and how to run them
+The test suites are stored in src/test/java -> com.qa.ims. One example is:
 
 ```
-Give an example
+CustomerDAOTest.java
 ```
 
 ### Integration Tests 
