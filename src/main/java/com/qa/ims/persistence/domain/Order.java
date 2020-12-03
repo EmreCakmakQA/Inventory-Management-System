@@ -48,7 +48,7 @@ public class Order {
 		this.totalPrice = totalPrice;
 	}
 
-	// generate getters & setters
+	// Generate getters & setters
 	public long getId() {
 		return id;
 	}
