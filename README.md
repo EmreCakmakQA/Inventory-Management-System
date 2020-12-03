@@ -1,10 +1,5 @@
-<<<<<<< HEAD
-Coverage: 34%
 # Inventory Management System
-=======
-Coverage: 8%
-# Project Title
->>>>>>> features
+Coverage: 10.9%
 
 An IMS with CRUD functionality that uses GCP to host a mySQL database. This project aimed at creating a system that can manipulate data on the cloud. The development process included Java code to run the processes with JUnit and Mockito as unit tests. This produced a working IMS that can track and manipulate customer information, order details and item data.
 
@@ -17,17 +12,17 @@ These instructions will get you a copy of the project up and running on your loc
 What things you need to install the software and how to install them
 
 ```
-Install: Eclipse IDE for Java and JDK14 as well as MySQL Server (locally running the project). You can also run the MySQL Server on a GCP instance
+Install: Eclipse IDE for Java and JDK14 as well as MySQL Server (locally running the project). You can also run the MySQL Server on a GCP instance.
 
 
 ```
 
 ### Installing
 
-The repository can be cloned with the following command in your terminal Make sure you are running the latest version of Java and MySQL 5.7 Server. The DBUtils files need to be changed to reflect this with your MySQL IP address.
+The repository can be cloned with the following command in your terminal Make sure you are running the latest version of Java and MySQL 5.7 Server. The DBUtils files need to be changed to reflect this with your MySQL IP address. Cloning the project will give you an IMS-Starter directory which you can open in Eclipse or another IDE of your choice.
 
 ```
-git clone
+git clone <repoURL>.git
 ```
 
 ### Running the project
@@ -69,7 +64,7 @@ RETURN: To return to domain selection
 ```
 
 ## Running the tests
-Both JUnit and Mockito were used in this project for testing and as it stands the unit coverage of the entire project is only at 8% due to time constaints.
+Both JUnit and Mockito were used in this project for testing and as it stands the unit coverage of the entire project is only at 10.9% due to time constaints. Testing is on-going in the hopes of increasing it.
 
 ### Unit Tests 
 The test suites are stored in src/test/java -> com.qa.ims. One example is:
@@ -79,10 +74,19 @@ CustomerDAOTest.java
 ```
 
 ### Integration Tests 
-Explain what these tests test, why and how to run them
+These tests test the CRUD functionality of the DAOs as well as testing for the right outputs being generated. The controllers are also being tested. Below is a list of all the tests in the project
 
 ```
-Give an example
+CustomerDAOTest.java
+CustomerDAOTestFail.java
+CustomerControllerTest.java
+ItemDAOTest.java
+ItemDAOTestFail.java
+ItemControllerTest.java
+OrderDAOTest.java
+OrderDAOTestFail.java
+OrderControllerTest.java
+
 ```
 
 ### And coding style tests
