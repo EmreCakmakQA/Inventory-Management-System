@@ -182,7 +182,7 @@ public class OrderDAO implements Dao<Order> {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();) {
 			return statement.executeUpdate(
-					"delete from order_item where fk_order_id = " + orderId + " && fk_item_id = " + itemId + " LIMIT 1");
+					"delete from orders_items where fk_order_id = " + orderId + " && fk_item_id = " + itemId + " LIMIT 1");
 		} catch (Exception e) {
 			LOGGER.debug(e);
 			LOGGER.error(e.getMessage());
@@ -216,7 +216,7 @@ public class OrderDAO implements Dao<Order> {
 	public int deleteItemFromAll(long item_id) {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();) {
-			return statement.executeUpdate("delete from orderslists where fk_item_id =" + item_id);
+			return statement.executeUpdate("delete from orders_items where fk_item_id =" + item_id);
 		} catch (Exception e) {
 			LOGGER.debug(e);
 			LOGGER.error(e.getMessage());
