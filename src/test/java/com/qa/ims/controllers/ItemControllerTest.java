@@ -32,8 +32,8 @@ public class ItemControllerTest {
 	@Test
 	public void testCreate() {
 		final String itemName = "cheese";
-		final long itemPrice = 10l;
-		final long itemQuantity = 1l;
+		final long itemPrice = 20l;
+		final long itemQuantity = 2l;
 		final Item created = new Item(itemName, itemPrice, itemQuantity);
 
 		Mockito.when(utils.getString()).thenReturn(itemName);
@@ -52,7 +52,7 @@ public class ItemControllerTest {
 	@Test
 	public void testReadAll() {
 		List<Item> items = new ArrayList<>();
-		items.add(new Item("cheese", 1L, 10L));
+		items.add(new Item("cheese", 20L, 2L));
 
 		Mockito.when(dao.readAll()).thenReturn(items);
 
@@ -63,9 +63,9 @@ public class ItemControllerTest {
 
 	@Test
 	public void testUpdate() {
-		Item updated = new Item("spoon", 2l, 20l);
+		Item updated = new Item("spoon", 1l, 10l);
 
-		Mockito.when(this.utils.getLong()).thenReturn(20l, updated.getItemPrice());
+		Mockito.when(this.utils.getLong()).thenReturn(10l, updated.getItemPrice());
 		Mockito.when(this.utils.getString()).thenReturn(updated.getItemName());
 		Mockito.when(this.dao.update(updated)).thenReturn(updated);
 

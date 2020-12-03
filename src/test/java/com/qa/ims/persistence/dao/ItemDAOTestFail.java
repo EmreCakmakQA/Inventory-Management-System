@@ -16,7 +16,7 @@ import com.qa.ims.utils.DBUtils;
 public class ItemDAOTestFail {
 
 	
-	private final ItemDAO DAO = new ItemDAO();
+	private final ItemDAO itemDAO = new ItemDAO();
 	
 	@BeforeClass
 	public static void init() {
@@ -32,7 +32,7 @@ public class ItemDAOTestFail {
 	public void testCreate()
 	{
 		Item item = new Item("PS5",1l, 20l);
-		assertNull(DAO.create(item));
+		assertNull(itemDAO.create(item));
 	}
 	
 	@Test
@@ -40,31 +40,31 @@ public class ItemDAOTestFail {
 	{
 		List<Item> item = new ArrayList<>();
 		
-		assertEquals(item,DAO.readAll());
+		assertEquals(item,itemDAO.readAll());
 	}
 	
 	@Test
 	public void testReadLatest()
 	{		
-		assertNull(DAO.readLatest());
+		assertNull(itemDAO.readLatest());
 	}
 	
 	@Test
 	public void testReadItem()
 	{		
-		assertNull(DAO.readItem(4L));
+		assertNull(itemDAO.readItem(4L));
 	}
 	
 	@Test
 	public void testUpdate()
 	{		
 		Item item = new Item("Bacon", 1L, 2L);
-		assertNull(DAO.update(item));
+		assertNull(itemDAO.update(item));
 	}
 	
 	@Test
 	public void testDelete()
 	{		
-		assertEquals(0,DAO.delete(1l));
+		assertEquals(0,itemDAO.delete(1l));
 	}
 }
