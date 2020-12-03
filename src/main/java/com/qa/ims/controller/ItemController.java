@@ -6,6 +6,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.qa.ims.persistence.dao.ItemDAO;
+import com.qa.ims.persistence.dao.OrderDAO;
 import com.qa.ims.persistence.domain.Item;
 import com.qa.ims.utils.Utils;
 
@@ -14,6 +15,7 @@ public class ItemController implements CrudController<Item> {
 	public static final Logger LOGGER = LogManager.getLogger();
 
 	private ItemDAO itemDAO;
+	private OrderDAO orderDAO = new OrderDAO();
 	private Utils utils;
 
 	public ItemController(ItemDAO itemDAO, Utils utils) {
@@ -84,6 +86,7 @@ public class ItemController implements CrudController<Item> {
 	public int delete() {
 		LOGGER.info("Please enter the id of the item you would like to delete");
 		Long id = utils.getLong();
+		orderDAO.deleteItemFromAll(id);
 		return itemDAO.delete(id);
 	}
 
