@@ -67,7 +67,7 @@ public class OrderController implements CrudController<Order> {
 	}
 
 	public Order update() {
-		LOGGER.info("Enter an order ID: ");
+		LOGGER.info("Enter the order ID you wish to update: ");
 		long id = utils.getLong();
 		
 		LOGGER.info("Enter a customer ID: ");
@@ -81,23 +81,29 @@ public class OrderController implements CrudController<Order> {
 		if (input.toLowerCase().equals("delete")) {
 			LOGGER.info("Enter an item ID: ");
 			Long itemId = utils.getLong();
-			orderDAO.deleteLine(order.getId(), itemId);
+			orderDAO.deleteLine(id, itemId);
 			return order;
 		} else if (input.toLowerCase().equals("add")) {
-			LOGGER.info("Enter an item ID: ");
-			Long itemId = utils.getLong();
-			orderDAO.createItem(order.getId(), itemId);
-			return order;
-		} else {
+			String answer;
+			do {
+				LOGGER.info("Enter an item ID: ");
+				Long itemId = utils.getLong();
+				orderDAO.createItem(order.getId(), itemId);
+				LOGGER.info("Add more items to order?");
+				answer = utils.getString();
+			} while(answer.toLowerCase().equals("yes"));
+		} 
+		else {
 			LOGGER.info("Invalid response, please enter add or delete");
 		}
+		LOGGER.info("Order Updated");
 		return order;
 
 	}
 
 	@Override
 	public int delete() {
-		LOGGER.info("Please enter the id of the item you would like to delete");
+		LOGGER.info("Please enter the id of the order you would like to delete");
 		long id = utils.getLong();
 		orderDAO.deleteOrderLines(id);
 		return orderDAO.delete(id);
