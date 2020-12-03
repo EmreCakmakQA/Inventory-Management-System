@@ -14,7 +14,9 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import com.qa.ims.controller.CustomerController;
 import com.qa.ims.persistence.dao.CustomerDAO;
+import com.qa.ims.persistence.dao.OrderDAO;
 import com.qa.ims.persistence.domain.Customer;
+import com.qa.ims.persistence.domain.Order;
 import com.qa.ims.utils.Utils;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -25,6 +27,9 @@ public class CustomerControllerTest {
 
 	@Mock
 	private CustomerDAO dao;
+	
+	@Mock
+	private OrderDAO orderDAO;
 
 	@InjectMocks
 	private CustomerController controller;
@@ -72,12 +77,15 @@ public class CustomerControllerTest {
 
 	@Test
 	public void testDelete() {
-		final long ID = 1L;
+		final long ID = 2L;
+		List<Order> order = new ArrayList<>();
+		order.add(new Order(1l,1l));
 
 		Mockito.when(utils.getLong()).thenReturn(ID);
-		Mockito.when(dao.delete(ID)).thenReturn(1);
+		Mockito.when(orderDAO.getCustomerOrder(2l)).thenReturn(order);
+		Mockito.when(dao.delete(ID)).thenReturn(2);
 
-		assertEquals(1L, this.controller.delete());
+		assertEquals(2L, this.controller.delete());
 
 		Mockito.verify(utils, Mockito.times(1)).getLong();
 		Mockito.verify(dao, Mockito.times(1)).delete(ID);
