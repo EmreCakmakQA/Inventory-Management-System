@@ -20,6 +20,7 @@ public class OrderDAO implements Dao<Order> {
 	
 	private ItemDAO itemDAO = new ItemDAO();
 	
+	
 	@Override
 	public Order modelFromResultSet(ResultSet resultSet) throws SQLException {
 		Long id = resultSet.getLong("order_id");
@@ -27,7 +28,7 @@ public class OrderDAO implements Dao<Order> {
 		List<Item> items = readLines(resultSet.getLong("order_id"));
 		Long totalPrice = 0l;
 		for(Item item:items) {
-			item.setItemQuantity(1L);
+			//item.setItemQuantity(1L);
 			totalPrice += item.getItemPrice();
 		}
 		return new Order(id, customerId, items, totalPrice);
@@ -153,7 +154,7 @@ public class OrderDAO implements Dao<Order> {
 		try (Connection connection = DBUtils.getInstance().getConnection();
 				Statement statement = connection.createStatement();) {
 			statement.executeUpdate("update orders set customer_id ='" + order.getCustomerId() + "' where order_id =" + order.getId());
-			statement.executeUpdate("UPDATE orders_items set fk_item_id ='" + order.getItems() + "' where fk_order_id =" + order.getId());
+			//statement.executeUpdate("UPDATE orders_items set fk_item_id ='" + order.getItems() + "' where fk_order_id =" + order.getId());
 			return readOrder(order.getId());
 		} catch (Exception e) {
 			LOGGER.debug(e);
