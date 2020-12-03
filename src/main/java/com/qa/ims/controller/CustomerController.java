@@ -6,7 +6,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.qa.ims.persistence.dao.CustomerDAO;
+import com.qa.ims.persistence.dao.OrderDAO;
 import com.qa.ims.persistence.domain.Customer;
+import com.qa.ims.persistence.domain.Order;
 import com.qa.ims.utils.Utils;
 
 /**
@@ -18,11 +20,13 @@ public class CustomerController implements CrudController<Customer> {
 	public static final Logger LOGGER = LogManager.getLogger();
 
 	private CustomerDAO customerDAO;
+	private OrderDAO orderDAO;
 	private Utils utils;
 
-	public CustomerController(CustomerDAO customerDAO, Utils utils) {
+	public CustomerController(CustomerDAO customerDAO, OrderDAO orderDAO, Utils utils) {
 		super();
 		this.customerDAO = customerDAO;
+		this.orderDAO = orderDAO;  
 		this.utils = utils;
 	}
 
@@ -77,6 +81,12 @@ public class CustomerController implements CrudController<Customer> {
 	public int delete() {
 		LOGGER.info("Please enter the id of the customer you would like to delete");
 		Long id = utils.getLong();
+		List<Order> orderID = orderDAO.getCustomerOrder(id);
+		for(Order order: orderID)
+		{
+			orderDAO.deleteOrderLines(order.getId());
+			orderDAO.delete(order.getId());
+		}
 		return customerDAO.delete(id);
 	}
 
