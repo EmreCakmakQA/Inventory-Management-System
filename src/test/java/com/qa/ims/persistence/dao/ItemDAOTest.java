@@ -14,7 +14,7 @@ import com.qa.ims.utils.DBUtils;
 
 public class ItemDAOTest {
 
-	private final ItemDAO DAO = new ItemDAO();
+	private final ItemDAO itemDAO = new ItemDAO();
 
 	@BeforeClass
 	public static void init() {
@@ -29,7 +29,7 @@ public class ItemDAOTest {
 	@Test
 	public void testCreate() {
 		final Item created = new Item("Bacon", 3L, 50l);
-		assertEquals(created, DAO.create(created));
+		assertEquals(created, itemDAO.create(created));
 	}
 
 	@Test
@@ -37,30 +37,30 @@ public class ItemDAOTest {
 		List<Item> expected = new ArrayList<>();
 		expected.add(new Item("PS5", 1L, 20l));
 		expected.add(new Item("Laptop", 2L, 10l));
-		assertEquals(expected, DAO.readAll());
+		assertEquals(expected, itemDAO.readAll());
 	}
 
 	@Test
 	public void testReadLatest() {
-		assertEquals(new Item("Laptop", 2L, 10l), DAO.readLatest());
+		assertEquals(new Item("Laptop", 2L, 10l), itemDAO.readLatest());
 	}
 
 	@Test
 	public void testRead() {
 		final long ID = 1L;
-		assertEquals(new Item("PS5", ID, 20l), DAO.readItem(ID));
+		assertEquals(new Item("PS5", ID, 20l), itemDAO.readItem(ID));
 	}
 
 	@Test
 	public void testUpdate() {
 		final Item updated = new Item("Iphone", 10L, 350l);
-		assertEquals(updated, DAO.update(updated));
+		assertEquals(updated, itemDAO.update(updated));
 
 	}
 
 	@Test
 	public void testDelete() {
-		assertEquals(1, DAO.delete(2));
+		assertEquals(1, itemDAO.delete(2));
 	}
 	
 }

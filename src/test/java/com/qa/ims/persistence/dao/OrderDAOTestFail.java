@@ -15,7 +15,7 @@ import com.qa.ims.utils.DBUtils;
 
 public class OrderDAOTestFail {
 
-	private final OrderDAO DAO = new OrderDAO();
+	private final OrderDAO orderDAO = new OrderDAO();
 
 	@BeforeClass
 	public static void init() {
@@ -30,91 +30,91 @@ public class OrderDAOTestFail {
 	@Test
 	public void testCreate() {
 		Order order = new Order(1l,1l);
-		assertNull(DAO.create(order));
+		assertNull(orderDAO.create(order));
 
 	}
 
 	@Test
 	public void testReadAll() {
 		final List <Order> item = new ArrayList<>();
-		assertEquals(item, DAO.readAll());
+		assertEquals(item, orderDAO.readAll());
 	}
 	
 	@Test
 	public void testReadLatest() {
 		final List<Order> order = new ArrayList<>();
-		assertEquals(order, DAO.readAll());
+		assertEquals(order, orderDAO.readAll());
 	}
 
 	@Test
 	public void testReadOrder()
 	{
-		assertNull(DAO.readOrder(1L));
+		assertNull(orderDAO.readOrder(1L));
 
 	}
 
 	@Test
 	public void testGetCustomerOrder()
 	{
-		assertNull(DAO.getCustomerOrder(1L));
+		assertNull(orderDAO.getCustomerOrder(1L));
 
 	}
 	
 	@Test
 	public void testCreateItem()
 	{
-		assertNull(DAO.createItem(1L,1L));
+		assertNull(orderDAO.createItem(1L,1L));
 
 	}
 	
 	@Test
 	public void testReadCustomer()
 	{
-		assertNull(DAO.readLatest());
+		assertNull(orderDAO.readLatest());
 	}
 	
 	@Test
 	public void testReadLines()
 	{
-		assertNull(DAO.readLines(1L));
+		assertNull(orderDAO.readLines(1L));
 	}
 	
 	@Test
 	public void testUpdate()
 	{
 		Order order = new Order(1l,1l);
-		assertNull(DAO.update(order));
+		assertNull(orderDAO.update(order));
 	}
 	
 	@Test
 	public void testDelete()
 	{
-		assertEquals(0, DAO.delete(1L));
+		assertEquals(0, orderDAO.delete(1L));
 	}
 	
 	@Test
 	public void testDeleteCustomer()
 	{
-		assertEquals(0, DAO.deleteCustomer(1L));
+		assertEquals(0, orderDAO.deleteCustomer(1L));
 	}
 	
 	@Test
 	public void testDeleteOrderLines()
 	{
-		assertEquals(0, DAO.deleteOrderLines(0));
+		assertEquals(0, orderDAO.deleteOrderLines(0));
 	}
 
 	@Test
 	public void testDeleteItem()
 	{
 
-		assertEquals(0, DAO.deleteLine(1L,1L));
+		assertEquals(0, orderDAO.deleteLine(1L,1L));
 	}
 	
 	@Test
 	public void testDeleteItemFromAll()
 	{
-		assertEquals(0, DAO.deleteItemFromAll(1L));
+		assertEquals(0, orderDAO.deleteItemFromAll(1L));
 	}
 	
 }

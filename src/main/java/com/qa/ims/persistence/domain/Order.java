@@ -82,7 +82,7 @@ public class Order {
 		this.totalPrice = totalPrice;
 	}
 
-	//
+	
 	@SuppressWarnings("unchecked")
 	public static Order convert(ResultSet rs) throws SQLException {
 		if (rs.next()) {
